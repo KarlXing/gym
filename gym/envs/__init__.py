@@ -129,6 +129,36 @@ register(
     reward_threshold=900,
 )
 
+register(
+    id='CarRacing2-v0',
+    entry_point='gym.envs.box2d:CarRacing2',
+    max_episode_steps=1000,
+    reward_threshold=900,
+)
+
+register(
+    id='CarRacing3-v0',
+    entry_point='gym.envs.box2d:CarRacing3',
+    max_episode_steps=1000,
+    reward_threshold=900,
+)
+
+register(
+    id='CarRacing4-v0',
+    entry_point='gym.envs.box2d:CarRacing4',
+    max_episode_steps=1000,
+    reward_threshold=900,
+)
+
+register(
+    id='CarRacing5-v0',
+    entry_point='gym.envs.box2d:CarRacing5',
+    max_episode_steps=1000,
+    reward_threshold=900,
+)
+
+
+
 # Toy Text
 # ----------------------------------------
 

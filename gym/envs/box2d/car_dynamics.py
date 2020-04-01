@@ -45,6 +45,8 @@ HULL_POLY4 =[
 WHEEL_COLOR = (0.0,0.0,0.0)
 WHEEL_WHITE = (0.3,0.3,0.3)
 MUD_COLOR   = (0.4,0.4,0.0)
+# MUD_COLOR   = (1.0,0.0,0.0)
+
 
 class Car:
     def __init__(self, world, init_angle, init_x, init_y):
@@ -241,4 +243,26 @@ class Car:
         for w in self.wheels:
             self.world.DestroyBody(w)
         self.wheels = []
+
+
+class Car2(Car):
+    def __init__(self, world, init_angle, init_x, init_y):
+        super().__init__(world, init_angle, init_x, init_y)
+        self.hull.color = (0.0,0.8,0.0)
+
+class Car3(Car):
+    def __init__(self, world, init_angle, init_x, init_y):
+        super().__init__(world, init_angle, init_x, init_y)
+        self.hull.color = (0.0,0.58,0.71)
+
+class Car4(Car):
+    def __init__(self, world, init_angle, init_x, init_y):
+        super().__init__(world, init_angle, init_x, init_y)
+        self.hull.color = (1.0,0.4,0.0)
+
+class Car5(Car):
+    def __init__(self, world, init_angle, init_x, init_y):
+        super().__init__(world, init_angle, init_x, init_y)
+        self.hull.color = (1.0,0.42,0.62)
+
 
