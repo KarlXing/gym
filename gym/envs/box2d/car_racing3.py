@@ -61,7 +61,7 @@ TRACK_WIDTH = 40/SCALE
 BORDER = 8/SCALE
 BORDER_MIN_COUNT = 4
 
-ROAD_COLOR = [0.4, 0.4, 0.4]
+ROAD_COLOR = [0.3, 0.4, 0.5]
 
 
 class CarRacing3(gym.Env, EzPickle):
@@ -73,7 +73,7 @@ class CarRacing3(gym.Env, EzPickle):
     def __init__(self, verbose=1):
         EzPickle.__init__(self)
         self.seed()
-        self.contactListener_keepref = FrictionDetector(self)
+        self.contactListener_keepref = FrictionDetector(self, road_color=ROAD_COLOR)
         self.world = Box2D.b2World((0,0), contactListener=self.contactListener_keepref)
         self.viewer = None
         self.invisible_state_window = None

@@ -63,9 +63,10 @@ BORDER_MIN_COUNT = 4
 ROAD_COLOR = [0.4, 0.4, 0.4]
 
 class FrictionDetector(contactListener):
-    def __init__(self, env):
+    def __init__(self, env, road_color=[0.4, 0.4, 0.4]):
         contactListener.__init__(self)
         self.env = env
+        self.road_color = road_color
     def BeginContact(self, contact):
         self._contact(contact, True)
     def EndContact(self, contact):
@@ -84,9 +85,9 @@ class FrictionDetector(contactListener):
         if not tile:
             return
 
-        tile.color[0] = ROAD_COLOR[0]
-        tile.color[1] = ROAD_COLOR[1]
-        tile.color[2] = ROAD_COLOR[2]
+        tile.color[0] = self.road_color[0]
+        tile.color[1] = self.road_color[1]
+        tile.color[2] = self.road_color[2]
         if not obj or "tiles" not in obj.__dict__:
             return
         if begin:

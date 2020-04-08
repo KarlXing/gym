@@ -49,8 +49,9 @@ MUD_COLOR   = (0.4,0.4,0.0)
 
 
 class Car:
-    def __init__(self, world, init_angle, init_x, init_y):
+    def __init__(self, world, init_angle, init_x, init_y, add_blob = False):
         self.world = world
+        self.add_blob = add_blob
         self.hull = self.world.CreateDynamicBody(
             position = (init_x, init_y),
             angle = init_angle,
@@ -204,9 +205,21 @@ class Car:
             for p in self.particles:
                 viewer.draw_polyline(p.poly, color=p.color, linewidth=5)
         for obj in self.drawlist:
-            for f in obj.fixtures:
+            for i, f in enumerate(obj.fixtures):
                 trans = f.body.transform
                 path = [trans*v for v in f.shape.vertices]
+                if self.add_blob and i == 3:
+                    obj_color = (0.8, 0.0, 0.)
+                    offset_x = f.shape.vertices[0][0] + 20
+                    offset_y = f.shape.vertices[0][1] + 10
+                    width = height = 8
+                    blob =[
+                        trans * (+offset_x, +offset_y+height),
+                        trans * (+offset_x+width, +offset_y+height),
+                        trans * (+offset_x+width, +offset_y),
+                        trans * (+offset_x, +offset_y),
+                    ]
+                    viewer.draw_polygon(blob, color=obj_color)
                 viewer.draw_polygon(path, color=obj.color)
                 if "phase" not in obj.__dict__: continue
                 a1 = obj.phase
@@ -244,16 +257,15 @@ class Car:
             self.world.DestroyBody(w)
         self.wheels = []
 
-
 class Car2(Car):
     def __init__(self, world, init_angle, init_x, init_y):
         super().__init__(world, init_angle, init_x, init_y)
-        self.hull.color = (0.0,0.8,0.0)
+        self.hull.color = (0.0,0.58,0.71)
 
 class Car3(Car):
     def __init__(self, world, init_angle, init_x, init_y):
         super().__init__(world, init_angle, init_x, init_y)
-        self.hull.color = (0.0,0.58,0.71)
+        self.hull.color = (0.0,0.8,0.0)
 
 class Car4(Car):
     def __init__(self, world, init_angle, init_x, init_y):
@@ -261,8 +273,8 @@ class Car4(Car):
         self.hull.color = (1.0,0.4,0.0)
 
 class Car5(Car):
-    def __init__(self, world, init_angle, init_x, init_y):
-        super().__init__(world, init_angle, init_x, init_y)
+    def __init__(self, world, init_angle, init_x, init_y, add_blob=True):
+        super().__init__(world, init_angle, init_x, init_y, add_blob)
         self.hull.color = (1.0,0.42,0.62)
 
 

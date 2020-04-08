@@ -408,6 +408,18 @@ class CarRacing4(gym.Env, EzPickle):
         gl.glVertex3f(W, 5*h, 0)
         gl.glVertex3f(0, 5*h, 0)
         gl.glVertex3f(0, 0, 0)
+
+        # bar
+        gl.glVertex3f(W, 5*h, 0)
+        gl.glVertex3f(W, H, 0)
+        gl.glVertex3f(W-3*s, H, 0)
+        gl.glVertex3f(W-3*s, 5*h, 0)
+        gl.glVertex3f(3*s, 5*h, 0)
+        gl.glVertex3f(3*s, H, 0)
+        gl.glVertex3f(0, H, 0)
+        gl.glVertex3f(0, 5*h, 0)
+        # end of bar
+
         def vertical_ind(place, val, color):
             gl.glColor4f(color[0], color[1], color[2], 1)
             gl.glVertex3f((place+0)*s, h + h*val, 0)
