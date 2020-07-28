@@ -316,6 +316,18 @@ class Image(Geom):
     def render1(self):
         self.img.blit(-self.width/2, -self.height/2, width=self.width, height=self.height)
 
+class Image2(Geom):
+    def __init__(self, fname, width, height):
+        Geom.__init__(self)
+        self.width = width
+        self.height = height
+        img = pyglet.image.load(fname)
+        self.img = img
+        self.flip = False
+        self.set_color(1, 1, 1)
+    def render1(self):
+        self.img.blit(0, 0, width=self.width, height=self.height)
+
 # ================================================================
 
 class SimpleImageViewer(object):

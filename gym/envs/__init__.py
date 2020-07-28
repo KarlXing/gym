@@ -109,6 +109,76 @@ register(
 )
 
 register(
+    id='LunarLander1-v2',
+    entry_point='gym.envs.box2d:LunarLander1',
+    max_episode_steps=1000,
+    reward_threshold=200,
+)
+
+register(
+    id='LunarLanderContinuous1-v2',
+    entry_point='gym.envs.box2d:LunarLanderContinuous1',
+    max_episode_steps=1000,
+    reward_threshold=200,
+)
+
+register(
+    id='LunarLander2-v2',
+    entry_point='gym.envs.box2d:LunarLander2',
+    max_episode_steps=1000,
+    reward_threshold=200,
+)
+
+register(
+    id='LunarLanderContinuous2-v2',
+    entry_point='gym.envs.box2d:LunarLanderContinuous2',
+    max_episode_steps=1000,
+    reward_threshold=200,
+)
+
+register(
+    id='LunarLander3-v2',
+    entry_point='gym.envs.box2d:LunarLander3',
+    max_episode_steps=1000,
+    reward_threshold=200,
+)
+
+register(
+    id='LunarLanderContinuous3-v2',
+    entry_point='gym.envs.box2d:LunarLanderContinuous3',
+    max_episode_steps=1000,
+    reward_threshold=200,
+)
+
+register(
+    id='LunarLander4-v2',
+    entry_point='gym.envs.box2d:LunarLander4',
+    max_episode_steps=1000,
+    reward_threshold=200,
+)
+
+register(
+    id='LunarLanderContinuous4-v2',
+    entry_point='gym.envs.box2d:LunarLanderContinuous4',
+    max_episode_steps=1000,
+    reward_threshold=200,
+)
+
+register(
+    id='LunarLander5-v2',
+    entry_point='gym.envs.box2d:LunarLander5',
+    max_episode_steps=1000,
+    reward_threshold=200,
+)
+
+register(
+    id='LunarLanderContinuous5-v2',
+    entry_point='gym.envs.box2d:LunarLanderContinuous5',
+    max_episode_steps=1000,
+    reward_threshold=200,
+)
+
+register(
     id='BipedalWalker-v3',
     entry_point='gym.envs.box2d:BipedalWalker',
     max_episode_steps=1600,
