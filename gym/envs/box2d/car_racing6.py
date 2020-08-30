@@ -6,9 +6,8 @@ from Box2D.b2 import (edgeShape, circleShape, fixtureDef, polygonShape, revolute
 
 import gym
 from gym import spaces
-from gym.envs.box2d.car_dynamics import Car2 as Car
+from gym.envs.box2d.car_dynamics import Car as Car
 from gym.utils import colorize, seeding, EzPickle
-from gym.envs.box2d.car_racing import FrictionDetector
 
 import pyglet
 from pyglet import gl
@@ -61,8 +60,46 @@ TRACK_WIDTH = 40/SCALE
 BORDER = 8/SCALE
 BORDER_MIN_COUNT = 4
 
-ROAD_COLOR = [0.3, 0.4, 0.5]
+ROAD_COLOR = [0.4, 0.4, 0.4]
 
+class FrictionDetector(contactListener):
+    def __init__(self, env, road_color=[0.4, 0.4, 0.4]):
+        contactListener.__init__(self)
+        self.env = env
+        self.road_color = road_color
+    def BeginContact(self, contact):
+        self._contact(contact, True)
+    def EndContact(self, contact):
+        self._contact(contact, False)
+    def _contact(self, contact, begin):
+        tile = None
+        obj = None
+        u1 = contact.fixtureA.body.userData
+        u2 = contact.fixtureB.body.userData
+        if u1 and "road_friction" in u1.__dict__:
+            tile = u1
+            obj  = u2
+        if u2 and "road_friction" in u2.__dict__:
+            tile = u2
+            obj  = u1
+        if not tile:
+            return
+
+        tile.color[0] = self.road_color[0]
+        tile.color[1] = self.road_color[1]
+        tile.color[2] = self.road_color[2]
+        if not obj or "tiles" not in obj.__dict__:
+            return
+        if begin:
+            obj.tiles.add(tile)
+            # print tile.road_friction, "ADD", len(obj.tiles)
+            if not tile.road_visited:
+                tile.road_visited = True
+                self.env.reward += 1000.0/len(self.env.track)
+                self.env.tile_visited_count += 1
+        else:
+            obj.tiles.remove(tile)
+            # print tile.road_friction, "DEL", len(obj.tiles) -- should delete to zero when on grass (this works)
 
 class CarRacing6(gym.Env, EzPickle):
     metadata = {
@@ -73,7 +110,7 @@ class CarRacing6(gym.Env, EzPickle):
     def __init__(self, verbose=1):
         EzPickle.__init__(self)
         self.seed()
-        self.contactListener_keepref = FrictionDetector(self, road_color=ROAD_COLOR)
+        self.contactListener_keepref = FrictionDetector(self, road_color = ROAD_COLOR)
         self.world = Box2D.b2World((0,0), contactListener=self.contactListener_keepref)
         self.viewer = None
         self.invisible_state_window = None
@@ -302,6 +339,7 @@ class CarRacing6(gym.Env, EzPickle):
                 done = True
                 step_reward = -100
 
+
         return self.state, step_reward, done, {}
 
     def render(self, mode='human'):
@@ -380,12 +418,12 @@ class CarRacing6(gym.Env, EzPickle):
 
     def render_road(self):
         gl.glBegin(gl.GL_QUADS)
-        gl.glColor4f(0.8, 0.8, 0.4, 1.0)
+        gl.glColor4f(0.5, 0.7, 0.6, 1.0)
         gl.glVertex3f(-PLAYFIELD, +PLAYFIELD, 0)
         gl.glVertex3f(+PLAYFIELD, +PLAYFIELD, 0)
         gl.glVertex3f(+PLAYFIELD, -PLAYFIELD, 0)
         gl.glVertex3f(-PLAYFIELD, -PLAYFIELD, 0)
-        gl.glColor4f(0.8, 0.9, 0.4, 1.0)
+        gl.glColor4f(0.5, 0.8, 0.6, 1.0)
         k = PLAYFIELD/20.0
         for x in range(-20, 20, 2):
             for y in range(-20, 20, 2):
