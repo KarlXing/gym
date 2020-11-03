@@ -10,6 +10,7 @@ try:
     from gym.envs.box2d.car_racing5 import CarRacing5
     from gym.envs.box2d.car_racing6 import CarRacing6
     from gym.envs.box2d.car_racing7 import CarRacing7
+    from gym.envs.box2d.car_racing8 import CarRacing8
     from gym.envs.box2d.lunar_lander1 import LunarLander1, LunarLanderContinuous1
     from gym.envs.box2d.lunar_lander2 import LunarLander2, LunarLanderContinuous2
     from gym.envs.box2d.lunar_lander3 import LunarLander3, LunarLanderContinuous3
